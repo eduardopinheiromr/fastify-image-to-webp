@@ -1,0 +1,29 @@
+{
+  "name": "fastify-png-to-webp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install:required": "yarn add -g nodemon ts-node env-cmd && yarn",
+    "dev": "env-cmd -f .env.development ts-node-dev -r tsconfig-paths/register --no-notify server.ts",
+    "start": "env-cmd -f .env.production ts-node --require ts-path-mapping/register server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "@fastify/multipart": "^7.1.0",
+    "env-cmd": "^10.1.0",
+    "fastify": "^4.2.1",
+    "sharp": "^0.30.7",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.4",
+    "@types/sharp": "^0.30.4",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.0.0",
+    "typescript": "^4.7.4"
+  }
+}
