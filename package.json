@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd -f .env.development ts-node-dev -r tsconfig-paths/register --no-notify server.ts",
+    "dev": "ts-node-dev server.ts",
     "start": "ts-node server.ts",
     "deploy": "yarn && yarn start"
   },
@@ -14,6 +14,7 @@
   "dependencies": {
     "@fastify/cors": "^8.0.0",
     "@fastify/multipart": "^7.1.0",
+    "dotenv": "^16.0.1",
     "env-cmd": "^10.1.0",
     "fastify": "^4.2.1",
     "sharp": "^0.30.7",

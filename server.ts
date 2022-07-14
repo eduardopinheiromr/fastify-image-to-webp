@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { convertPNGToWebP } from "./utils/convertPNGToWebP";
+import "dotenv/config";
 
 const fastify = Fastify({
   logger: true,
@@ -20,7 +21,7 @@ fastify.post("/convert", async function (req, res) {
   res.send({ base64: image.toBase64() });
 });
 
-fastify.listen({ port: process.env.PORT ?? 8080 }, function (err, address) {
+fastify.listen({ port: Number(process.env.PORT) }, function (err, address) {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
