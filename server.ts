@@ -21,9 +21,12 @@ fastify.post("/convert", async function (req, res) {
   res.send({ base64: image.toBase64() });
 });
 
-fastify.listen({ port: Number(process.env.PORT) }, function (err, address) {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
+fastify.listen(
+  { port: Number(process.env.PORT) || 3000, host: "0.0.0.0" },
+  function (err, address) {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
   }
-});
+);
