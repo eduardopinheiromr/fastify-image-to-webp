@@ -6,7 +6,7 @@
   "scripts": {
     "install:required": "yarn add -g nodemon ts-node env-cmd && yarn",
     "dev": "env-cmd -f .env.development ts-node-dev -r tsconfig-paths/register --no-notify server.ts",
-    "start": "yarn install && env-cmd -f .env.production ts-node --require ts-path-mapping/register server.ts"
+    "start": "env-cmd -f .env.production ts-node --require ts-path-mapping/register server.ts"
   },
   "keywords": [],
   "author": "",
