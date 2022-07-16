@@ -2,6 +2,11 @@ import Fastify from "fastify";
 import { convertToWebP } from "./utils/convertToWebP";
 import "dotenv/config";
 
+import os from "os";
+import cluster from "cluster";
+
+const clusterWorkerSize = os.cpus().length;
+
 const fastify = Fastify({
   logger: true,
 });
@@ -21,12 +26,38 @@ fastify.post("/convert", async function (req, res) {
   res.send({ base64: image.toBase64() });
 });
 
-fastify.listen(
-  { port: Number(process.env.PORT) || 3000, host: "0.0.0.0" },
-  function (err, address) {
-    if (err) {
-      fastify.log.error(err);
-      process.exit(1);
-    }
+const start = async () => {
+  try {
+    fastify.listen(
+      { port: Number(process.env.PORT) || 3000, host: "0.0.0.0" },
+      function (err, address) {
+        if (err) {
+          fastify.log.error(err);
+          process.exit(1);
+        }
+      }
+    );
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
   }
-);
+};
+
+if (clusterWorkerSize > 1) {
+  if (cluster.isPrimary) {
+    for (let i = 0; i < clusterWorkerSize; i++) {
+      cluster.fork();
+    }
+
+    cluster.on("exit", function (worker, code, signal) {
+      console.log("Worker", worker.id, "has exited with signal", signal);
+      if (code !== 0 && !worker.exitedAfterDisconnect) {
+        cluster.fork();
+      }
+    });
+  } else {
+    start();
+  }
+} else {
+  start();
+}
