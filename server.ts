@@ -2,10 +2,10 @@ import Fastify from "fastify";
 import { convertToWebP } from "./utils/convertToWebP";
 import "dotenv/config";
 
-import os from "os";
-import cluster from "cluster";
+// import os from "os";
+// import cluster from "cluster";
 
-const clusterWorkerSize = os.cpus().length;
+// const clusterWorkerSize = os.cpus().length;
 
 const fastify = Fastify({
   logger: true,
@@ -43,21 +43,21 @@ const start = async () => {
   }
 };
 
-if (clusterWorkerSize > 1) {
-  if (cluster.isPrimary) {
-    for (let i = 0; i < clusterWorkerSize; i++) {
-      cluster.fork();
-    }
+// if (clusterWorkerSize > 1) {
+//   if (cluster.isPrimary) {
+//     for (let i = 0; i < clusterWorkerSize; i++) {
+//       cluster.fork();
+//     }
 
-    cluster.on("exit", function (worker, code, signal) {
-      console.log("Worker", worker.id, "has exited with signal", signal);
-      if (code !== 0 && !worker.exitedAfterDisconnect) {
-        cluster.fork();
-      }
-    });
-  } else {
-    start();
-  }
-} else {
-  start();
-}
+//     cluster.on("exit", function (worker, code, signal) {
+//       console.log("Worker", worker.id, "has exited with signal", signal);
+//       if (code !== 0 && !worker.exitedAfterDisconnect) {
+//         cluster.fork();
+//       }
+//     });
+//   } else {
+//     start();
+//   }
+// } else {
+//   start();
+// }
