@@ -43,6 +43,8 @@ const start = async () => {
   }
 };
 
+start();
+
 // if (clusterWorkerSize > 1) {
 //   if (cluster.isPrimary) {
 //     for (let i = 0; i < clusterWorkerSize; i++) {
